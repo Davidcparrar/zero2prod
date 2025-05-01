@@ -17,13 +17,13 @@ async fn health_check_works() {
         .get(format!("{address}/health_check"))
         .send()
         .await
-        .expect("Failedtoexecuterequest.");
+        .expect("Failed to execute request.");
     // Assert
     assert!(response.status().is_success());
     assert_eq!(Some(0), response.content_length());
 }
 
-// Launch ourapplicationinthebackground~somehow~
+// Launch our application in the background ~somehow~
 fn spawn_app() -> String {
     let host = "127.0.0.1";
     let listener = TcpListener::bind(format!("{host}:0")).expect("Failed to bind random port");
