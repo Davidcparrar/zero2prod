@@ -6,10 +6,27 @@ async fn health_check() -> impl Responder {
     HttpResponse::Ok()
 }
 
+#[derive(serde::Deserialize)]
+struct FormSubscriptionData {
+    name: String,
+    email: String,
+}
+
+async fn subscribe(subscription_form: web::Form<FormSubscriptionData>) -> impl Responder {
+    let name = &subscription_form.name;
+    let email = &subscription_form.email;
+    println!("Received subscription from {} <{}>", name, email);
+    HttpResponse::Ok().finish()
+}
+
 pub fn run(listener: TcpListener) -> Result<Server, std::io::Error> {
-    let server = HttpServer::new(|| App::new().route("/health_check", web::get().to(health_check)))
-        .listen(listener)?
-        .run();
+    let server = HttpServer::new(|| {
+        App::new()
+            .route("/health_check", web::get().to(health_check))
+            .route("/subscriptions", web::post().to(subscribe))
+    })
+    .listen(listener)?
+    .run();
     // No.awaithere!
     Ok(server)
 }
