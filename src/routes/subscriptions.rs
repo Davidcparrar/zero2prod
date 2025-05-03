@@ -1,4 +1,4 @@
-use actix_web::{HttpResponse, Responder, web};
+use actix_web::{web, HttpResponse, Responder};
 use chrono::Utc;
 use sqlx::PgPool;
 use uuid::Uuid;
@@ -15,16 +15,18 @@ pub async fn subscribe(
 ) -> impl Responder {
     let name = &subscription_form.name;
     let email = &subscription_form.email;
+    let id = Uuid::new_v4();
+    let subscribed_at = Utc::now();
 
     match sqlx::query!(
         r#"
-        INSERT INTO subscriptions(id,email,name,subscribed_at)
-        VALUES($1,$2,$3,$4)
+        INSERT INTO subscriptions (id, email, name, subscribed_at)
+        VALUES ($1, $2, $3, $4)
         "#,
-        Uuid::new_v4(),
+        id,
         email,
         name,
-        Utc::now()
+        subscribed_at
     )
     // Weuse`get_ref`to getanimmutablereferencetothe`PgConnection`
     // wrappedby`web::Data`.
