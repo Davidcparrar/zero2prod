@@ -109,4 +109,12 @@ This will watch for changes in the code and run `cargo check` and `cargo test` w
 ## Unit tests
 Unit tests are located in the `tests` directory. They are run using the `cargo test` command. The tests use the `reqwest` test client to make requests to the API and check the responses.
 
+## sqlx
 
+sqlx is used to interact with the database, howwver, for the CI to work properly (clippy I am looking at you) we need the .sqlx directory to be present in the root of the project. This is done by running the following command:
+
+```bash
+sqlx prepare --check --all-targets --workspace
+```
+
+This command will create the `.sqlx` directory and prepare the database for testing. It will also check for any errors in the SQL queries and migrations. This is useful for ensuring that the database is ready for testing and that there are no errors in the SQL queries.
