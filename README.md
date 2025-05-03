@@ -94,3 +94,19 @@ docker exec -it postgres-test psql -U postgres
 ```
 
 This will open a PostgreSQL shell where you can run SQL commands.
+
+
+# Development
+
+It is recommended to use cargo watch to automatically check the code for changes and run tests when files are modified. This can be done by running the following command in a separate terminal:
+
+```bash
+ cargo watch -x check -x test
+```
+This will watch for changes in the code and run `cargo check` and `cargo test` whenever a file is modified. This is useful for quickly checking for errors and running tests without having to manually run the commands every time.
+
+# Testing
+## Unit tests
+Unit tests are located in the `tests` directory. They are run using the `cargo test` command. The tests use the `reqwest` test client to make requests to the API and check the responses.
+
+
