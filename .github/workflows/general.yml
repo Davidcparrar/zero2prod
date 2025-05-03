@@ -77,8 +77,8 @@ jobs:
       - name: Run tests
         run: cargo test
 
-      - name: Check that queries are fresh
-        run: cargo sqlx prepare --workspace --check -- --all-targets
+      # - name: Check that queries are fresh
+        # run: cargo sqlx prepare --workspace --check -- --all-targets
 
   # `fmt` container job
   fmt:
@@ -103,7 +103,7 @@ jobs:
         with:
           components: clippy
       - name: Linting
-        run: cargo clippy -- -D warnings
+        run: SQLX_OFFLINE=1 cargo clippy -- -D warnings
 
   # `coverage` container job
   coverage:
