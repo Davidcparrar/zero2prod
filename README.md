@@ -118,3 +118,21 @@ sqlx prepare --check --all-targets --workspace
 ```
 
 This command will create the `.sqlx` directory and prepare the database for testing. It will also check for any errors in the SQL queries and migrations. This is useful for ensuring that the database is ready for testing and that there are no errors in the SQL queries.
+
+# Telemetry
+
+This project uses the `tracing` crate for logging and telemetry. It is used to log events and errors in the application. The traces are sent to a `tracing-subscriber` which can be configured to send the logs to different outputs, such as a file or a remote server. The `tracing` crate is used to create spans and events in the code, which can be used to track the flow of the application and debug issues.
+
+For testing purposes the TEST_LOG=true environment variable is used to enable logging in the tests. This is useful for debugging and checking the logs during testing. The logs are printed to the console and can be used to check for errors and events in the application.
+
+Traces are json formatted, in local development bunyan can be used to format the logs and make them more readable. This can be done by running the following command:
+
+```bash
+ TEST_LOG=true cargo test health_check_works | bunyan
+```
+
+bunyan is an NPM package but cargo can be used to install a rust-port:
+
+```bash
+cargo install bunyan
+```
