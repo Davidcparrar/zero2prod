@@ -2,7 +2,7 @@
 
 This is a simple project that demonstrates how to build a REST API using Rust and Actix-web. The project uses PostgreSQL as the database and sqlx for database interactions.
 
-It also includes a Dockerfile and docker-compose file for easy deployment.
+It also includes a Dockerfile file for easy local development.
 
 # Getting Started
 
