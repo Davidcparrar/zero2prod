@@ -114,7 +114,7 @@ Unit tests are located in the `tests` directory. They are run using the `cargo t
 sqlx is used to interact with the database, howwver, for the CI to work properly (clippy I am looking at you) we need the .sqlx directory to be present in the root of the project. This is done by running the following command:
 
 ```bash
-sqlx prepare --check --all-targets --workspace
+ cargo sqlx prepare --workspace --check -- --all-targets
 ```
 
 This command will create the `.sqlx` directory and prepare the database for testing. It will also check for any errors in the SQL queries and migrations. This is useful for ensuring that the database is ready for testing and that there are no errors in the SQL queries.
@@ -135,4 +135,11 @@ bunyan is an NPM package but cargo can be used to install a rust-port:
 
 ```bash
 cargo install bunyan
+```
+
+
+## Useful commands
+
+```bash
+curl -i -X POST -d 'email=thomas_mann7@hotmail.com&name=Tom' http://127.0.0.1:8000/subscriptions -v
 ```
