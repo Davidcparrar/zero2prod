@@ -6,8 +6,20 @@ on:
   # NB: this differs from the book's project!
   # These settings allow us to run this specific CI pipeline for PRs against
   push:
+    paths-ignore:
+      - 'configuration/**'
+      - 'infrastructure/**'
+      - 'scripts/**'
+      - 'README.md'
+      - 'LICENSE'
   pull_request:
     types: [opened, synchronize, reopened]
+    paths-ignore:
+      - 'configuration/**'
+      - 'infrastructure/**'
+      - 'scripts/**'
+      - 'README.md'
+      - 'LICENSE'
 
 env:
   CARGO_TERM_COLOR: always
