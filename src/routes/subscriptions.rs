@@ -1,4 +1,7 @@
 use actix_web::{HttpResponse, web};
+use chrono::Utc;
+use sqlx::PgPool;
+use uuid::Uuid;
 
 #[derive(serde::Deserialize)]
 pub struct FormData {
@@ -7,8 +10,27 @@ pub struct FormData {
 }
 
 // Let's start simple: we always return a 200 OK
-pub async fn subscribe(form: web::Form<FormData>) -> HttpResponse {
+pub async fn subscribe(form: web::Form<FormData>, pool: web::Data<PgPool>) -> HttpResponse {
     println!("Username: {}", form.name);
     println!("Email: {}", form.email);
-    HttpResponse::Ok().finish()
+
+    match sqlx::query!(
+        r#"
+            INSERT INTO subscriptions (id, email, name, subscribed_at)
+            VALUES ($1, $2, $3, $4)
+        "#,
+        Uuid::new_v4(),
+        form.email,
+        form.name,
+        Utc::now()
+    )
+    .execute(pool.get_ref())
+    .await
+    {
+        Ok(_) => HttpResponse::Ok().finish(),
+        Err(_) => {
+            println!("Failed to insert new subscriber.");
+            HttpResponse::InternalServerError().finish()
+        }
+    }
 }
