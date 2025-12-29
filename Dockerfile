@@ -25,10 +25,10 @@ RUN apt-get update -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 # Copy the binary from the builder stage
-COPY --from=builder /app/target/release/zero2prod .
+COPY --from=builder /app/target/release/zero2prod zero2prod
 # We need the configuration file at runtime
 COPY configuration configuration
 # Set the environment variable for the application environment
 ENV APP_ENVIRONMENT=production
 # When `docker run` is executed, launch the binary!
-ENTRYPOINT [".zero2prod"]
+ENTRYPOINT ["./zero2prod"]
