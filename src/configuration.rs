@@ -1,5 +1,6 @@
 use config::{Config, ConfigError, File};
 use secrecy::{ExposeSecret, Secret};
+use serde_aux::field_attributes::deserialize_number_from_string;
 
 pub enum Environment {
     Local,
@@ -37,6 +38,7 @@ pub struct Settings {
 
 #[derive(serde::Deserialize)]
 pub struct ApplicationSettings {
+    #[serde(deserialize_with = "deserialize_number_from_string")]
     pub port: u16,
     pub host: String,
 }
@@ -46,6 +48,7 @@ pub struct DatabaseSettings {
     pub username: String,
     pub password: Secret<String>,
     pub host: String,
+    #[serde(deserialize_with = "deserialize_number_from_string")]
     pub port: u16,
     pub database_name: String,
 }
@@ -77,6 +80,11 @@ pub fn get_configuration() -> Result<Settings, ConfigError> {
         .add_source(File::from(
             configuration_directory.join(environment_filename),
         ))
+        .add_source(
+            config::Environment::with_prefix("APP")
+                .prefix_separator("_")
+                .separator("__"),
+        )
         .build()?;
 
     // Try to convert the configuration values it read into

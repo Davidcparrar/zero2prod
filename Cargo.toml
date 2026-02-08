@@ -18,6 +18,7 @@ secrecy = { version = "0.8", features = ["serde"] }
 # env_logger = "0.9"
 # log = "0.4.29"
 serde = { version = "1", features = ["derive"] }
+serde-aux = "4.7.0"
 sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio-rustls", "macros", "postgres", "chrono", "uuid", "migrate"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 tracing = { version = "0.1.44", features = ["log"] }
