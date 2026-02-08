@@ -149,3 +149,12 @@ Cargo expand
 ```bash
 cargo +nightly rustc --profile=check -- -Zunpretty=expanded
 ```
+
+# Digital Ocean
+
+```
+sudo snap install doctl
+doctl auth init
+doctl apps create --spec spec.yaml
+doctl apps update <ID> --spec=spec.yaml
+```
