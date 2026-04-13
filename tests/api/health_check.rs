@@ -7,6 +7,7 @@ async fn health_check_works() {
     let TestApp {
         address,
         db_pool: _,
+        email_server: _,
     } = spawn_app().await;
     // We need to bring in `reqwest`
     // to perform HTTP requests against our application.
